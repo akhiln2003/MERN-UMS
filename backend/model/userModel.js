@@ -2,6 +2,10 @@ import mongoose from "mongoose";
 import bcrypt from 'bcryptjs'
 
 const userSchema = mongoose.Schema({
+    profileImage:{
+        type:String,
+        default:'https://media.kcm.fm/wp-uploads/2024/06/blank-profile-picture-973460_640.png'
+      },
     name:{
         type:String,
         required : true

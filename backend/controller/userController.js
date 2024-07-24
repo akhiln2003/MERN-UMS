@@ -13,7 +13,8 @@
         res.status(201).json({
             _id : user._id,
             name : user.name,
-            email : user.email
+            email : user.email,
+            profileImage : user.profileImage
         });
     }else{
         res.status(400);
@@ -28,7 +29,7 @@
  // @access public
  const registerUser = asyncHandler(async( req,res)=>{
 
-    const { name , email , password } = req.body;
+    const { userName , email , password } = req.body;
 
     const userExist = await User.findOne({email: email}) ;
     if( userExist ){
@@ -36,7 +37,7 @@
         throw new Error("user alredsy exsist with this email")
     }
     const user = await User.create({
-        name , 
+        name : userName , 
         email,
         password
     });
@@ -45,7 +46,8 @@
         res.status(201).json({
             _id : user._id,
             name : user.name,
-            email : user.email
+            email : user.email,
+            profileImage : user.profileImage
         });
     }else{
         res.status(400);
@@ -72,7 +74,8 @@ const getUserProfiel = asyncHandler(async( req,res)=>{
     const user = {
         _id : req.user._id,
         name : req.user.name,
-        email : req.user.email
+        email : req.user.email,
+        profileImage : req.user.profileImage
     }
     res.status(200).json(user)
 });
@@ -82,19 +85,20 @@ const getUserProfiel = asyncHandler(async( req,res)=>{
 // route   PUT /api/users/profile
 // @access privet
 const updateUserProfile = asyncHandler(async( req,res)=>{
+    const {  name , imageUrl  } = req.body
     const user = await User.findById(req.user._id);
     if( user ){
-        user.name = req.body.name || user.name
-        user.email = req.body.email || user.email
-        if( req.body.password ){
-            user.password = req.body.password;
-        }
+        user.name = name || user.name
+        user.profileImage = imageUrl || user.profileImage
+        
+        
         const updatedUser = await user.save();
 
         res.status( 200 ).json({
             _id : updatedUser._id,
             name: updatedUser.name,
-            email : updatedUser.email
+            email : updatedUser.email,
+            profileImage : req.user.profileImage
         })
 
     }else{
