@@ -1,9 +1,11 @@
 import { Dot, Eye, EyeOff } from 'lucide-react'
-import React, { useState } from 'react'
-import { useDispatch } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react'
+import { useDispatch , useSelector} from 'react-redux';
+import {  useNavigate } from 'react-router-dom';
 import Buttons from '../../components/common/Buttons';
-
+import { useAuthadminMutation } from '../../redux/slices/admin/adminApiSlice'
+import { setAdminCredentials } from '../../redux/slices/admin/adminAuthSlice'
+import {toast} from 'react-toastify'
 function AdminLogin() {
 
 
@@ -18,17 +20,22 @@ function AdminLogin() {
       const [ eye , setEye ] = useState(false)
       const navigate = useNavigate();
       const dispatch = useDispatch();
-      
-     
+      const { adminInfo } = useSelector((state) => state.adminauth);
+      const [adminlogin, { isLoading }] = useAuthadminMutation();
+
+      useEffect(() => {
+        if ( adminInfo ) navigate("/admin");
+      }, [navigate, adminInfo]);
+
       function handilChange(event) {
         const { name, value } = event.target;
         setData((prev) => ({
           ...prev,
           [name]: value,
         }));
-    
         handilValidation(name, value);
       }
+
       function handilValidation(name, value) {
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         const passwordRegex = /^[A-Za-z\d]{8,}$/;
@@ -40,7 +47,6 @@ function AdminLogin() {
         if (name == "password" && !passwordRegex.test(value)) {
           errMessage = " Enter Secure Password ";
         }
-    
         setValidat((prev) => ({
           ...prev,
           [name]: errMessage,
@@ -48,6 +54,7 @@ function AdminLogin() {
         return;
       }
     
+
       function handilEye(){
         eye ? setEye(false) : setEye(true);
       }
@@ -72,12 +79,12 @@ function AdminLogin() {
             return;
           }
     
-        //   const res = await login({ email, password }).unwrap();
-        //   dispatch(setCredentials({ ...res }));
-        //   toast.success("Login Successfully")
-        //   navigate("/");
+          const res = await adminlogin({ email, password }).unwrap();
+          dispatch(setAdminCredentials({ ...res }));
+          toast.success(`welcome back ${res.name}`);
+          navigate("/admin");
         } catch (err) {
-        //   toast.error(err?.data?.message || err.error);
+          toast.error(err?.data?.message || err.error);
         }
       }
   return (

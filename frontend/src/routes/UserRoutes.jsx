@@ -6,7 +6,6 @@ import SignUp from '../pages/users/SignUp'
 import Profile from '../pages/users/Profile'
 import ProtectedRoute from '../components/ProtactedRoute'
 import UpdateProfile from '../pages/users/UpdateProfile'
-import AdminLogin from '../pages/admin/AdminLogin'
 
 
 
@@ -20,7 +19,6 @@ const UserRoutes = () => {
         < Route path='/user/signup' element = { < SignUp /> } />
         < Route path='/user/profile' element = { <ProtectedRoute >< Profile/></ProtectedRoute>} />
         < Route path='/user/profile/update' element = { <ProtectedRoute >< UpdateProfile/></ProtectedRoute>} />
-        < Route path='/admin/login' element = { < AdminLogin />} />
     </Routes>
     </>
   )

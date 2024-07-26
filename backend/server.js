@@ -1,6 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import userRoutes from './routes/userRoutes.js';
+import adminRoutes from './routes/adminRoutes.js'
 import { notFound , errorHandiler } from './middleware/errrorMiddleware.js'; 
 import connectDB from './config/db.js';
 import cookieParser from 'cookie-parser';
@@ -16,6 +17,7 @@ app.use(express.urlencoded({extended:true}));
 app.use( cookieParser() );
 
 app.use('/api/users', userRoutes); 
+app.use('/api/admin', adminRoutes); 
 
 app.get("/", (req, res) => res.send("Server is running"));
 
