@@ -70,12 +70,12 @@ const createUser = asyncHandler(async( req,res)=>{
         password
     });
     if( user ){
-        generateToken( res ,user._id );
-        res.status(201).json({
-            _id : user._id,
-            name : user.name,
-            email : user.email,
-            profileImage : user.profileImage
+
+        res.status(200).json({
+          _id: user._id,
+          name : user.name,
+          email:  user.email,
+          profileImage : user.profileImage
         });
     }else{
         res.status(400);

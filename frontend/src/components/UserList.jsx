@@ -16,7 +16,7 @@ const UserList = ({ user, refetch }) => {
   const [userData, setUserData] = useState({
     name: user.name,
     email: user.email,
-    profileImg: user.profileImage,
+    profileImg : user.profileImage,
   });
 
   const inputRef = useRef(null);
@@ -106,9 +106,8 @@ const UserList = ({ user, refetch }) => {
         data: { imageUrl },
         id: user._id,
       }).unwrap();
-      dispatch(setAdminCredentials({ ...res }));
       toast.success("Profile Updated");
-      navigate("/user/profile");
+      setEditProfile(false)
     } catch (err) {
       toast.error(err?.data?.message || err);
     }
@@ -121,10 +120,7 @@ const UserList = ({ user, refetch }) => {
   const handleCancelEdit = () => {
     setEditProfile(false);
     setUpdatedPic(null);
-    setUserData((prevUserData) => ({
-      ...prevUserData,
-      profileImg: user.profileImg,
-    }));
+    
   };
 
   const triggerFileInput = () => {

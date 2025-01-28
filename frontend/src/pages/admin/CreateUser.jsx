@@ -3,8 +3,7 @@ import { Dot , Loader , EyeOff  , Eye } from "lucide-react";
 import Buttons from "../../components/common/Buttons";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useRegistorMutation } from "../../redux/slices/usersApiSlice";
-import { setCredentials } from "../../redux/slices/authSlice";
+import { useCreateuserMutation } from "../../redux/slices/admin/adminApiSlice";
 import { useDispatch, useSelector } from "react-redux";
 function CreateUser() {
   let [ eye , setEye ] = useState(false); 
@@ -22,11 +21,11 @@ function CreateUser() {
   });
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { userInfo } = useSelector((state) => state.auth);
-  const [registor, { isLoading }] = useRegistorMutation();
+  const { adminInfo } = useSelector((state) => state.adminauth);
+  const [ createuser , { isLoading }] = useCreateuserMutation();
   useEffect(() => {
-    if (!userInfo) navigate("/admin");
-  }, [navigate, userInfo]);
+    if (!adminInfo) navigate("/admin");
+  }, [navigate, adminInfo]);
   function handilChange(event) {
     const { name, value } = event.target;
 
@@ -92,8 +91,8 @@ function CreateUser() {
     }
      
     try {
-      const res = await registor({ userName, email, password }).unwrap();
-      dispatch(setCredentials({ ...res }));
+      const res = await createuser({ userName, email, password }).unwrap();
+      
       toast.success("Registration Successfully")
       navigate("/admin/dashbord");
     } catch (err) {

@@ -18,12 +18,10 @@ function Dashbord() {
           user.name.toLowerCase().includes(searchTerm.toLowerCase())
         );
       }, [usersData, searchTerm]);
-      function handilDelete (){
-        
-      }
+
   return (
     <div className=' w-full h-auto bg-gray-200 px-20 py-10'>
-        <div className='w-full bg-white h-screen mt-[5rem] rounded-xl '>
+        <div className='w-full  bg-white  mt-[5rem] rounded-xl '>
             <div className='w-full h-20 border-b-2 border-gray-200 gap-5  flex justify-end pr-5 py-5  pt-5'>
                 <input 
                 type="text" 

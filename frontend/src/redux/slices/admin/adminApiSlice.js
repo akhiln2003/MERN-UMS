@@ -25,7 +25,7 @@ const adminApiSlice = apiSlice.injectEndpoints({
     }),
     createuser: builder.mutation({
       query: (data) => ({
-        url: `${ADMIN_URL}/users`,
+        url: `${ADMIN_URL}/createuser`,
         method: "POST",
         body: data,
       }),
